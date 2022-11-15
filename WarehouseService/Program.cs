@@ -1,6 +1,14 @@
+
+using WarehouseService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddScoped<IItemRepository, ItemRepo>();
+builder.Services.AddScoped<IItemGroupRepository, ItemGroupRepo>();
+builder.Services.AddScoped<ILocationRepository, LocationRepo>();
+builder.Services.AddScoped<IStockRepository, StockRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
