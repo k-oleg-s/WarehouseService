@@ -1,32 +1,61 @@
 ﻿using WarehouseService.Models;
+using WarehouseService.Data;
 
 namespace WarehouseService.Services
 {
     public class StockRepo : IStockRepository
     {
+        #region Services
+
+        private readonly WarehouseServiceDbContext _context;
+
+        #endregion
+
+        public StockRepo(WarehouseServiceDbContext context)
+        {
+            _context = context;
+        }
         public int Create(Stock obj)
         {
-            throw new NotImplementedException();
+            _context.stockT.Add(obj);
+            _context.SaveChanges();
+            return obj.Id;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            Stock Stock = GetById(id);
+            if (Stock != null)
+            {
+                _context.stockT.Remove(Stock);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public IList<Stock> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.stockT.ToList();
         }
 
         public Stock GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.stockT.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(Stock obj)
+        public bool Update(Stock obj)
         {
-            throw new NotImplementedException();
+            Stock Stock = GetById(obj.Id);
+            if (Stock != null)
+            {
+                Stock.Qty = obj.Qty;
+                Stock.LocationId = obj.LocationId;
+                Stock.ItemId = obj.ItemId;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

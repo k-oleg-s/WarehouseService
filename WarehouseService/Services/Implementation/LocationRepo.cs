@@ -1,32 +1,59 @@
 ﻿using WarehouseService.Models;
+using WarehouseService.Data;
 
 namespace WarehouseService.Services
 {
     public class LocationRepo : ILocationRepository
     {
+        #region Services
+
+        private readonly WarehouseServiceDbContext _context;
+
+        #endregion
+
+        public LocationRepo(WarehouseServiceDbContext context)
+        {
+            _context = context;
+        }
         public int Create(Location obj)
         {
-            throw new NotImplementedException();
+            _context.locationsT.Add(obj);
+            _context.SaveChanges();
+            return obj.Id;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            Location Location = GetById(id);
+            if (Location != null)
+            {
+                _context.locationsT.Remove(Location);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public IList<Location> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.locationsT.ToList();
         }
 
         public Location GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.locationsT.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(Location obj)
+        public bool Update(Location obj)
         {
-            throw new NotImplementedException();
+            Location Location = GetById(obj.Id);
+            if (Location != null)
+            {
+                Location.LocationCode = obj.LocationCode;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

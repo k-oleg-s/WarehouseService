@@ -1,32 +1,58 @@
 ﻿using WarehouseService.Models;
+using WarehouseService.Data;
 
-namespace WarehouseService.Services
+namespace WarehouseService.Services;
+
+public class ItemGroupRepo : IItemGroupRepository
 {
-    public class ItemGroupRepo : IItemGroupRepository
+    #region Services
+
+    private readonly WarehouseServiceDbContext _context;
+
+    #endregion
+
+    public ItemGroupRepo(WarehouseServiceDbContext context)
     {
-        public Guid Create(ItemGroup obj)
-        {
-            throw new NotImplementedException();
-        }
+        _context = context;
+    }
+    public Guid Create(ItemGroup obj)
+    {
+        _context.itemGroupsT.Add(obj);
+        _context.SaveChanges();
+        return obj.Id;
+    }
 
-        public void Delete(Guid id)
+    public bool Delete(Guid id)
+    {
+        ItemGroup item_group = GetById(id);
+        if (item_group != null)
         {
-            throw new NotImplementedException();
+            _context.itemGroupsT.Remove(item_group);
+            _context.SaveChanges();
+            return true;
         }
+        return false;
+    }
 
-        public IList<ItemGroup> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+    public IList<ItemGroup> GetAll()
+    {
+        return _context.itemGroupsT.ToList();
+    }
 
-        public ItemGroup GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+    public ItemGroup GetById(Guid id)
+    {
+        return _context.itemGroupsT.FirstOrDefault(x => x.Id == id);
+    }
 
-        public void Update(ItemGroup obj)
+    public bool Update(ItemGroup obj)
+    {
+        ItemGroup item_group = GetById(obj.Id);
+        if (item_group != null)
         {
-            throw new NotImplementedException();
+            item_group.GroupName = obj.GroupName;
+            _context.SaveChanges();
+            return true;
         }
+        return false;
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseService.Models;
 using WarehouseService.Services;
+using WarehouseService.Data;
 
 namespace WarehouseService.Controllers;
 

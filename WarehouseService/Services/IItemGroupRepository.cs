@@ -1,4 +1,5 @@
-﻿using WarehouseService.Models;
+﻿using WarehouseService.Data;
+using WarehouseService.Models;
 
 namespace WarehouseService.Services;
 
