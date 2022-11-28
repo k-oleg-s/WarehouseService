@@ -32,4 +32,10 @@ public class LocationController : ControllerBase
     {
         return Ok(_locationRepository.GetById(id));
     }
+
+    [HttpGet("delete/{id}")]
+    public IActionResult DeleteById([FromRoute] int id)
+    {
+        return Ok(_locationRepository.Delete(id));
+    }
 }

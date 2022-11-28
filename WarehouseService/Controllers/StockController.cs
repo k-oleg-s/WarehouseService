@@ -44,6 +44,12 @@ namespace WarehouseService.Controllers
         {
             return Ok(_stockRepository.GetById(id));
         }
+
+        [HttpGet("delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            return Ok(_stockRepository.Delete(id));
+        }
         #endregion
     }
 }

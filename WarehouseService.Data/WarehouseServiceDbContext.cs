@@ -8,6 +8,8 @@ public class WarehouseServiceDbContext : DbContext
     public DbSet<Item> itemsT { get; set; }
     public DbSet<Location> locationsT { get; set; }
     public DbSet<Stock> stockT { get; set; }
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<AccountSession> AccountSessions { get; set; }
     public WarehouseServiceDbContext(DbContextOptions options) : base(options)
     {
     }
